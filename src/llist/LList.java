@@ -113,15 +113,16 @@ public class LList<T> implements Iterable<T>{
      * @param node The node to remove.
      */
     public void remove(LLNode<T> node) {
-        System.out.println(node.getData());
         if (length() == 1)
             head = tail = null;
         else if (node == head)
             head = node.getNext();
         else if (node == tail)
             tail = node.getPrev();
-        else
+        else {
+            node.getNext().setPrev(node.getPrev());
             node.getPrev().setNext(node.getNext());
+        }
         count--;
     }
 

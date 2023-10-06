@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
@@ -38,25 +39,31 @@ class LListTest {
         mirroredTestList.add(5);
         assertEquals(testList, mirroredTestList);
 
-        assertTrue(testList.contains(5));
-
-        testList.remove(5);
-        mirroredTestList.remove((Object) 5);
-        assertEquals(testList, mirroredTestList);
-
-        testList.remove( 3);
+        testList.remove(3);
         mirroredTestList.remove((Object) 3);
-        assertEquals(testList, mirroredTestList);
+        assertTrue(testList.equals(mirroredTestList));
+
+        testList.remove( 4);
+        mirroredTestList.remove((Object) 4);
+        assertTrue(testList.equals(mirroredTestList));
+
+        testList.remove(1);
+        mirroredTestList.remove((Object) 1);
+        assertTrue(testList.equals(mirroredTestList));
+
+        testList.remove( 5);
+        mirroredTestList.remove((Object) 5);
+        assertTrue(testList.equals(mirroredTestList));
     }
 
     @Test
     public void testToString() {
         LList<Integer> testList = makeTestLList();
         assertEquals("[1, 2, 3, 4, 5]", testList.toString());
-//        testList.remove(3);
-//        testList.remove(4);
-//        assertEquals("[1, 2, 5]", testList.toString());
-//        assertEquals("[]", (new LList<>()).toString());
+        testList.remove(3);
+        testList.remove(4);
+        assertEquals("[1, 2, 5]", testList.toString());
+        assertEquals("[]", (new LList<>()).toString());
     }
 
     @Test
