@@ -239,15 +239,16 @@ public class LList<T> implements Iterable<T>{
         }
 
         public boolean hasNext() {
-            return !exhausted;
+            return cursor != null;
         }
 
         public T next() {
-            T data = cursor.getData();
-            cursor = cursor.getNext();
-            if (cursor == null)
-                exhausted = true;
-            return data;
+            if (hasNext()) {
+                T data = cursor.getData();
+                cursor = cursor.getNext();
+                return data;
+            }
+            return null;
         }
     }
 }
