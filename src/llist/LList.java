@@ -150,6 +150,72 @@ public class LList<T> implements Iterable<T>{
     }
 
     /**
+     * Swap two nodes.
+     *
+     * @param node1 The first node.
+     * @param node2 The node to swap the first node with.
+     */
+    public void swap(LLNode<T> node1, LLNode<T> node2) {
+        LLNode<T> node1Next = node1.getNext();
+        LLNode<T> node1Prev = node1.getPrev();
+
+        LLNode<T> node2Next = node2.getNext();
+        LLNode<T> node2Prev = node2.getPrev();
+
+        node1.setNext(node2Next);
+        node1.setPrev(node2Prev);
+
+        node2.setNext(node1Next);
+        node2.setPrev(node1Prev);
+
+        node1Prev.setNext(node2);
+        node1Next.setPrev(node2);
+
+        node2Prev.setNext(node1);
+        node2Next.setPrev(node1);
+    }
+
+    /**
+     * Compare two LLists.
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (!((other) instanceof Iterable))
+            return false;
+
+        LListIterator ourIterator = iterator();
+        Iterator theirIterator = ((Iterable) other).iterator();
+
+        while (ourIterator.hasNext() && theirIterator.hasNext()) {
+            if (!ourIterator.next().equals(theirIterator.next()))
+                return false;
+        };
+        return true;
+    }
+
+    public String toString() {
+        if (length() == 0)
+            return "[]";
+        StringBuilder output = new StringBuilder();
+        output.append("[");
+        for (T element : this) {
+            output.append(element.toString() + ", ");
+        }
+        output.setLength(output.length() - 2);
+        output.append("]");
+        return output.toString();
+    }
+
+    /**
+     * Clear the list.
+     */
+    public void clear() {
+        head = null;
+        tail = null;
+        count = 0;
+    }
+
+    /**
      * Obtain the length of the linked list.
      *
      * @return The length of the linked list.
