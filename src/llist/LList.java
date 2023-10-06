@@ -2,6 +2,8 @@ package llist;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
 
 public class LList<T> implements Iterable<T>{
     private LLNode<T> head = null;
@@ -151,29 +153,58 @@ public class LList<T> implements Iterable<T>{
     }
 
     /**
+     * Swap two elements.
+     *
+     * @param value1 The first value.
+     * @param value2 The value of the node to swap the with the node containing the first value with.
+     */
+    public void swap(T value1, T value2) {
+        swap(locateNode(value1), locateNode(value2));
+    }
+
+    /**
      * Swap two nodes.
      *
      * @param node1 The first node.
      * @param node2 The node to swap the first node with.
      */
     public void swap(LLNode<T> node1, LLNode<T> node2) {
+        if (node1 == node2) {
+            return;
+        }
+
         LLNode<T> node1Next = node1.getNext();
         LLNode<T> node1Prev = node1.getPrev();
 
         LLNode<T> node2Next = node2.getNext();
         LLNode<T> node2Prev = node2.getPrev();
 
-        node1.setNext(node2Next);
-        node1.setPrev(node2Prev);
-
-        node2.setNext(node1Next);
         node2.setPrev(node1Prev);
+        node2.setNext(node1Next);
+        if (node1Prev != null)
+            node1Prev.setNext(node2);
+        if (node1Next != null)
+            node1Next.setPrev(node2);
 
-        node1Prev.setNext(node2);
-        node1Next.setPrev(node2);
+        node1.setPrev(node2Prev);
+        node1.setNext(node2Next);
+        if (node2Prev != null)
+            node2Prev.setNext(node1);
+        if (node2Next != null)
+            node2Next.setPrev(node1);
 
-        node2Prev.setNext(node1);
-        node2Next.setPrev(node1);
+        if (node1.getNext() == null)
+            tail = node1;
+        if (node1.getPrev() == null)
+            head = node1;
+
+        if (node2.getNext() == null)
+            tail = node2;
+        if (node2.getPrev() == null)
+            head = node2;
+
+        head.clearPrev();
+        tail.clearNext();
     }
 
     /**
@@ -200,7 +231,7 @@ public class LList<T> implements Iterable<T>{
         StringBuilder output = new StringBuilder();
         output.append("[");
         for (T element : this) {
-            output.append(element.toString() + ", ");
+            output.append(element.toString()).append(", ");
         }
         output.setLength(output.length() - 2);
         output.append("]");
@@ -236,7 +267,7 @@ public class LList<T> implements Iterable<T>{
 
         public LListIterator(LList<T> llist) {
             this.llist = llist;
-            cursor = llist.head;
+            cursor = llist.getHeadNode();
         }
 
         public boolean hasNext() {

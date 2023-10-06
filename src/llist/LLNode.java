@@ -38,6 +38,13 @@ public class LLNode <T> {
     }
 
     /**
+     * Clear the next node.
+     */
+    public void clearNext() {
+        setNext(null);
+    }
+
+    /**
      * Obtain the subsequent node.
      *
      * @return The subsequent node.
@@ -65,6 +72,13 @@ public class LLNode <T> {
     }
 
     /**
+     * Clear the prior node.
+     */
+    public void clearPrev() {
+        setPrev(null);
+    }
+
+    /**
      * Obtain the prior node.
      *
      * @return The prior node.
@@ -80,5 +94,10 @@ public class LLNode <T> {
      */
     public boolean hasPrev() {
         return getPrev() != null;
+    }
+
+    @Override
+    public String toString() {
+        return "LLNode(" + getData() + ")";
     }
 }
