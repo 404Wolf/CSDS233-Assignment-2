@@ -2,12 +2,11 @@ package llist;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 
 public class LList<T> implements Iterable<T>{
-    private LLNode<T> head = null;
-    private LLNode<T> tail = null;
+    private Node<T> head = null;
+    private Node<T> tail = null;
     private int count = 0;
 
     public LList () {
@@ -33,7 +32,7 @@ public class LList<T> implements Iterable<T>{
      *
      * @return The head node.
      */
-    public LLNode<T> getHeadNode() {
+    public Node<T> getHeadNode() {
         return head;
     }
 
@@ -60,7 +59,7 @@ public class LList<T> implements Iterable<T>{
      *
      * @return The tail node.
      */
-    public LLNode<T> getTailNode() {
+    public Node<T> getTailNode() {
         return tail;
     }
 
@@ -74,7 +73,7 @@ public class LList<T> implements Iterable<T>{
     }
 
     public void append(T value) {
-        append(new LLNode<>(value));
+        append(new Node<>(value));
     }
 
     /**
@@ -82,7 +81,7 @@ public class LList<T> implements Iterable<T>{
      *
      * @param node The node to append to the linked list.
      */
-    public void append(LLNode<T> node) {
+    public void append(Node<T> node) {
         if (length() == 0) {
             head = node;
             tail = node;
@@ -114,7 +113,7 @@ public class LList<T> implements Iterable<T>{
      *
      * @param node The node to remove.
      */
-    public void remove(LLNode<T> node) {
+    public void remove(Node<T> node) {
         if (length() == 1)
             head = tail = null;
         else if (node == head)
@@ -131,8 +130,8 @@ public class LList<T> implements Iterable<T>{
     /**
      * Locate a node by its contained value.
      */
-    public LLNode<T> locateNode(T value) {
-        LLNode<T> cursor = getHeadNode();
+    public Node<T> locateNode(T value) {
+        Node<T> cursor = getHeadNode();
         while (cursor != null) {
             if (cursor.getData().equals(value))
                 return cursor;
@@ -168,16 +167,16 @@ public class LList<T> implements Iterable<T>{
      * @param node1 The first node.
      * @param node2 The node to swap the first node with.
      */
-    public void swap(LLNode<T> node1, LLNode<T> node2) {
+    public void swap(Node<T> node1, Node<T> node2) {
         if (node1 == node2) {
             return;
         }
 
-        LLNode<T> node1Next = node1.getNext();
-        LLNode<T> node1Prev = node1.getPrev();
+        Node<T> node1Next = node1.getNext();
+        Node<T> node1Prev = node1.getPrev();
 
-        LLNode<T> node2Next = node2.getNext();
-        LLNode<T> node2Prev = node2.getPrev();
+        Node<T> node2Next = node2.getNext();
+        Node<T> node2Prev = node2.getPrev();
 
         node2.setPrev(node1Prev);
         node2.setNext(node1Next);
@@ -262,7 +261,7 @@ public class LList<T> implements Iterable<T>{
 
     private class LListIterator implements Iterator<T> {
         public LList<T> llist;
-        private LLNode<T> cursor;
+        private Node<T> cursor;
         private boolean exhausted = false;
 
         public LListIterator(LList<T> llist) {
@@ -270,10 +269,12 @@ public class LList<T> implements Iterable<T>{
             cursor = llist.getHeadNode();
         }
 
+        @Override
         public boolean hasNext() {
             return cursor != null;
         }
 
+        @Override
         public T next() {
             if (hasNext()) {
                 T data = cursor.getData();
