@@ -71,22 +71,16 @@ public class LList<T> implements Iterable<T>{
         this.tail.setData(data);
     }
 
-    /**
-     * Obtain the data contained in the tail.
-     *
-     * @return The data contained in the tail.
-     */
-    public T getTail() {
-        return tail.getData();
+    public void append(T value) {
+        append(new LLNode<>(value));
     }
 
     /**
-     * Append a value to the end of the linked list.
+     * Append a node to the end of the linked list.
      *
-     * @param value The value to append to the linked list.
+     * @param node The node to append to the linked list.
      */
-    public void append(T value) {
-        LLNode<T> node = new LLNode<>(value);
+    public void append(LLNode<T> node) {
         if (length() == 0) {
             head = node;
             tail = node;
