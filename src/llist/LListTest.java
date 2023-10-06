@@ -99,4 +99,18 @@ class LListTest {
         testList.swap(1, 4);
         assertTrue(testList.equals(new LList<>(new Integer[]{5, 2, 3, 1, 4})));
     }
+
+    @Test
+    public void testLength(){
+        LList<Integer> testList = makeTestLList();
+        assertEquals(5, testList.length());
+        testList.remove(1);
+        assertEquals(4, testList.length());
+        testList.remove(5);
+        assertEquals(3, testList.length());
+        testList.clear();
+        assertEquals(0, testList.length());
+        testList.append(55);
+        assertEquals(1, testList.length());
+    }
 }
