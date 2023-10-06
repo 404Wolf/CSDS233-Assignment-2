@@ -104,15 +104,7 @@ public class LList<T> implements Iterable<T>{
      * @param toRemove The element to remove.
      */
     public void remove(T toRemove) {
-        LLNode<T> cursor = head;
-        while (cursor != null){
-            if (cursor.getData().equals(toRemove)) {
-                remove(cursor);
-                return;
-            }
-            cursor = cursor.getNext();
-        }
-        throw new NoSuchElementException();
+        remove(locateNode(toRemove));
     }
 
     /**
@@ -121,6 +113,7 @@ public class LList<T> implements Iterable<T>{
      * @param node The node to remove.
      */
     public void remove(LLNode<T> node) {
+        System.out.println(node.getData());
         if (length() == 1)
             head = tail = null;
         else if (node == head)
@@ -133,19 +126,27 @@ public class LList<T> implements Iterable<T>{
     }
 
     /**
+     * Locate a node by its contained value.
+     */
+    public LLNode<T> locateNode(T value) {
+        LLNode<T> cursor = getHeadNode();
+        while (cursor != null) {
+            if (cursor.getData().equals(value))
+                return cursor;
+            cursor = cursor.getNext();
+        }
+
+        throw new NoSuchElementException("No such node exists in linked list.");
+    }
+
+    /**
      * Check to see if an element is contained in the list.
      *
      * @param value The value to check the presence of.
      */
     public boolean contains(T value) {
-//        System.out.println(head.getData());
-//        System.out.println(head.getNext().getData());
-//        System.out.println(head.getNext().getNext().getData());
-//        System.out.println(head.getNext().getNext().getNext().getData());
-        for (T element : this)
-            if (value.equals(element))
-                return true;
-        return false;
+        try { locateNode(value); return true; }
+        catch (NoSuchElementException e) { return false; }
     }
 
     /**
