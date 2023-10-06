@@ -1,15 +1,15 @@
 package llist;
 
-public class LLNode <T> {
-    private LLNode<T> next;
-    private LLNode<T> prev;
+public class Node<T> {
+    private Node<T> next;
+    private Node<T> prev;
     private T data;
 
-    public LLNode (T data){
+    public Node(T data){
         this.data = data;
     }
 
-    public LLNode (T data, LLNode<T> prev, LLNode<T> next){
+    public Node(T data, Node<T> prev, Node<T> next){
         this.data = data;
         this.prev = prev;
         this.next = next;
@@ -33,7 +33,7 @@ public class LLNode <T> {
      *
      * @param next The next node.
      */
-    public void setNext(LLNode<T> next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 
@@ -49,7 +49,7 @@ public class LLNode <T> {
      *
      * @return The subsequent node.
      */
-    public LLNode<T> getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
@@ -67,7 +67,7 @@ public class LLNode <T> {
      *
      * @param prev The node to set the prior node to.
      */
-    public void setPrev(LLNode<T> prev) {
+    public void setPrev(Node<T> prev) {
         this.prev = prev;
     }
 
@@ -83,7 +83,7 @@ public class LLNode <T> {
      *
      * @return The prior node.
      */
-    public LLNode<T> getPrev() {
+    public Node<T> getPrev() {
         return prev;
     }
 
