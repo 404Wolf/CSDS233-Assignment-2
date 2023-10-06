@@ -1,27 +1,81 @@
 package llist;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 
 class LListTest {
-    @Test
-    void remove() {
+    public LList<Integer> makeTestLList() {
         LList<Integer> testList = new LList<>();
         testList.append(1);
         testList.append(2);
         testList.append(3);
         testList.append(4);
+        testList.append(5);
+        return testList;
+    }
 
-        assertTrue(testList.contains(1));
-        assertTrue(testList.contains(2));
-        assertTrue(testList.contains(3));
-        assertTrue(testList.contains(4));
+    @Test
+    public void testClear() {
+        LList<Integer> testList = makeTestLList();
+        testList.clear();
+        assertEquals(0, testList.length());
+        assertTrue(testList.equals(new ArrayList<>()));
+    }
 
-        testList.remove(3);
-        assertTrue(testList.contains(1));
-        assertTrue(testList.contains(2));
-        assertFalse(testList.contains(3));
-        assertTrue(testList.contains(4));
+    @Test
+    public void testRemove() {
+        LList<Integer> testList = makeTestLList();
+        ArrayList<Integer> mirroredTestList = new ArrayList<Integer>();
+        mirroredTestList.add(1);
+        mirroredTestList.add(2);
+        mirroredTestList.add(3);
+        mirroredTestList.add(4);
+        mirroredTestList.add(5);
+        assertEquals(testList, mirroredTestList);
+
+        assertTrue(testList.contains(5));
+
+        testList.remove(5);
+        mirroredTestList.remove((Object) 5);
+        assertEquals(testList, mirroredTestList);
+
+        testList.remove( 3);
+        mirroredTestList.remove((Object) 3);
+        assertEquals(testList, mirroredTestList);
+    }
+
+    @Test
+    public void testToString() {
+        LList<Integer> testList = makeTestLList();
+        assertEquals("[1, 2, 3, 4, 5]", testList.toString());
+//        testList.remove(3);
+//        testList.remove(4);
+//        assertEquals("[1, 2, 5]", testList.toString());
+//        assertEquals("[]", (new LList<>()).toString());
+    }
+
+    @Test
+    public void testEquals() {
+        ArrayList<Integer> equivalentTestList = new ArrayList<>();
+        equivalentTestList.add(1);
+        equivalentTestList.add(2);
+        equivalentTestList.add(3);
+        equivalentTestList.add(4);
+        equivalentTestList.add(5);
+
+        assertTrue(makeTestLList().equals(equivalentTestList));
+        equivalentTestList.remove(1);
+        assertFalse(makeTestLList().equals(equivalentTestList));
+    }
+
+    @Test
+    public void testSwap(){
+        LList<Integer> testList = makeTestLList();
+
     }
 }
