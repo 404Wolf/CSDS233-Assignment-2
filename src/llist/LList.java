@@ -27,12 +27,39 @@ public class LList<T> implements Iterable<T>{
     }
 
     /**
+     * Get the head node.
+     *
+     * @return The head node.
+     */
+    public LLNode<T> getHeadNode() {
+        return head;
+    }
+
+    /**
      * Set the data contained in the head.
      *
      * @param data The data to place into the head.
      */
     public void setHead(T data) {
         head.setData(data);
+    }
+
+    /**
+     * Obtain the data contained in the tail.
+     *
+     * @return The data contained in the tail.
+     */
+    public T getTail() {
+        return tail.getData();
+    }
+
+    /**
+     * Obtain the tail node.
+     *
+     * @return The tail node.
+     */
+    public LLNode<T> getTailNode() {
+        return tail;
     }
 
     /**
