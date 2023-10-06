@@ -8,6 +8,15 @@ public class LList<T> implements Iterable<T>{
     private LLNode<T> tail = null;
     private int count = 0;
 
+    public LList () {
+        super();
+    }
+
+    public LList (T[] elements) {
+        for (T element : elements)
+            append(element);
+    }
+
     /**
      * Get the data contained in the head.
      *
