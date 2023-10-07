@@ -1,12 +1,12 @@
 package bst;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class BST <T>{
     private Node<T> root;
     private int count;
+    private int keySum;
 
     /**
      * Determine the number of nodes in the tree.
@@ -15,9 +15,19 @@ public class BST <T>{
      */
     public int length() { return count; }
 
+    /**
+     * Get the total sum of all the keys in the tree.
+     *
+     * @return The total sum of all the keys in the tree.
+     */
+    public int keySum() {
+        return keySum;
+    }
+
     public void insert(int key, T data) {
         Node<T> cursor = getRootNode();
         Node<T> newNode = new Node<T>(key, data);
+        keySum += key;
 
         if (length() == 0) {
             root = newNode;
@@ -74,29 +84,51 @@ public class BST <T>{
     public void clear() {
         root = null;
         count = 0;
+        keySum = 0;
     }
 
     /**
-     * Obtain an inorder traversal queue of the items in the tree.
+     * Find the k-th biggest element in the tree.
      *
-     * @return A queue with an inorder traversal of the items in the queue.
+     * @param k The index of the item of the sorted array to return.
      */
-    public LinkedList<T> inorder() {
-        if (length() == 0)
-            return new LinkedList<T>();
+    public T kthBiggest(int k) {
+        LinkedHashSet<T> orderedNoDuplicates = LinkedHashSet.newLinkedHashSet(length());
+        for (T element : inorder()) {
+            orderedNoDuplicates.add(element);
+        }
 
-        LinkedList<T> output = new LinkedList<T>();
+        Iterator<T> hashSetIterator = orderedNoDuplicates.iterator();
+        for (int i = 0; i < orderedNoDuplicates.size(); i++)
+            if (i == k - 1)
+                return hashSetIterator.next();
+            else
+                hashSetIterator.next();
+
+        throw new NoSuchElementException();
+    }
+
+    /**
+     * Obtain an inorder traversal array of the items in the tree.
+     *
+     * @return An array with an inorder traversal of the items in the array.
+     */
+    public ArrayList<T> inorder() {
+        if (length() == 0)
+            return new ArrayList<>();
+
+        ArrayList<T> output = new ArrayList<T>();
         inorderBuilder(getRootNode(), output);
         return output;
     }
 
-    private void inorderBuilder(Node<T> node, Queue<T> queue) {
+    private void inorderBuilder(Node<T> node, ArrayList<T> array) {
         if (node.getLeft() != null)
-            inorderBuilder(node.getLeft(), queue);
+            inorderBuilder(node.getLeft(), array);
 
-        queue.add(node.getData());
+        array.add(node.getData());
 
         if (node.getRight() != null)
-            inorderBuilder(node.getRight(), queue);
+            inorderBuilder(node.getRight(), array);
     }
 }
