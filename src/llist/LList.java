@@ -178,30 +178,60 @@ public class LList<T> implements Iterable<T>{
         Node<T> node2Next = node2.getNext();
         Node<T> node2Prev = node2.getPrev();
 
-        node2.setPrev(node1Prev);
-        node2.setNext(node1Next);
-        if (node1Prev != null)
-            node1Prev.setNext(node2);
-        if (node1Next != null)
-            node1Next.setPrev(node2);
+        // The algorithm is broken into two different cases. Either the nodes are subsequent, or the nodes are not
+        // subsequent. The first two cases handle the swap if the nodes are subsequent.
+        if (node1Next == node2) {
+            if (node1 == getHeadNode()) {
+                head = node2;
+            }
+            if (node2Next != null)
+                node2Next.setPrev(node1);
+            if (node1Prev != null)
+                node1Prev.setNext(node2);
+            node2.setNext(node1);
+            node2.setPrev(node1Prev);
+            node1.setPrev(node2);
+            node1.setNext(node2Next);
+        }
+        else if (node2Next == node1) {
+            if (node2 == getTailNode()) {
+                tail = node1;
+            }
+            if (node1Next != null)
+                node1Next.setPrev(node2);
+            if (node2Prev != null)
+                node2Prev.setNext(node1);
+            node1.setNext(node2);
+            node1.setPrev(node2Prev);
+            node2.setPrev(node1);
+            node2.setNext(node1Next);
+        }
+        // Nodes are not subsequent.
+        else {
+            node2.setPrev(node1Prev);
+            node2.setNext(node1Next);
+            if (node1Prev != null)
+                node1Prev.setNext(node2);
+            if (node1Next != null)
+                node1Next.setPrev(node2);
 
-        node1.setPrev(node2Prev);
-        node1.setNext(node2Next);
-        if (node2Prev != null)
-            node2Prev.setNext(node1);
-        if (node2Next != null)
-            node2Next.setPrev(node1);
+            node1.setPrev(node2Prev);
+            node1.setNext(node2Next);
+            if (node2Prev != null)
+                node2Prev.setNext(node1);
+            if (node2Next != null)
+                node2Next.setPrev(node1);
 
-        if (node1.getNext() == null)
-            tail = node1;
-        if (node1.getPrev() == null)
-            head = node1;
+            if (node1.getNext() == null)
+                tail = node1;
+            if (node1.getPrev() == null)
+                head = node1;
 
-        if (node2.getNext() == null)
-            tail = node2;
-        if (node2.getPrev() == null)
-            head = node2;
-
+            if (node2.getNext() == null)
+                tail = node2;
+            if (node2.getPrev() == null)
+                head = node2;
+        }
         head.clearPrev();
         tail.clearNext();
     }

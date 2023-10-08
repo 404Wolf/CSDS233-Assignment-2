@@ -84,20 +84,26 @@ class LListTest {
     public void testSwap(){
         LList<Integer> testList = makeTestLList();
 
-        testList.swap(2, 4);
         System.out.println(testList);
-        assertTrue(testList.equals(new LList<>(new Integer[]{1, 4, 3, 2, 5})));
+        testList.swap(2, 3);
+        System.out.println(testList);
+        assertTrue(testList.equals(new LList<>(new Integer[]{1, 3, 2, 4, 5})));
 
-        testList.swap(2, 4);
-        assertTrue(testList.equals(new LList<>(new Integer[]{1, 2, 3, 4, 5})));
 
+        testList = makeTestLList();
+        testList.swap(3, 2);
+        assertTrue(testList.equals(new LList<>(new Integer[]{1, 3, 2, 4, 5})));
+
+        testList = makeTestLList();
+        testList.swap(1, 2);
+        assertTrue(testList.equals(new LList<>(new Integer[]{2, 1, 3, 4, 5})));
+
+        testList = makeTestLList();
         testList.swap(1, 5);
-        assertTrue(testList.getHead().equals(5));
-        assertEquals(null, testList.getTailNode().getNext());
         assertTrue(testList.equals(new LList<>(new Integer[]{5, 2, 3, 4, 1})));
 
-        testList.swap(1, 4);
-        assertTrue(testList.equals(new LList<>(new Integer[]{5, 2, 3, 1, 4})));
+        testList.swap(1, 3);
+        assertTrue(testList.equals(new LList<>(new Integer[]{5, 2, 1, 4, 3})));
     }
 
     @Test
