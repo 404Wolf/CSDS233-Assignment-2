@@ -10,3 +10,6 @@ For parts A-2 and A-3 please see the attached PDF, `A2-A3 Response.pdf`.
 * I've changed the `preorderRec` method to **return** instead of print out the preorder of the binary search tree. I've also renamed the method to `preorder`. Like `insert`, it does not require the root node to be passed to it, since it is able to internally utilize the instance field `root` through the getter `getRootNode()`.
 * I've changed `sum` to not require the root node, for the same reason I've done so for the other methods.
 * I've changed `kthBiggest` to not require the root node, for the same reason I've done so for the other methods.
+
+## Overall Notes
+For both my linked list and binary search tree, I've given them a package folder to keep them organized, and have implemented corresponding JUnit tests in their respective folders. The test classes have the same names as the original classes, but are suffixed with `Test`. The tests for respective methods have the same name as the method, prefixed by `test`. For example, `testPreorder` tests the `preorder` method of a BST. 
