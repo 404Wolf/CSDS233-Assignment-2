@@ -14,7 +14,7 @@ class BSTTest {
     public BST<Integer> makeEmptyBst() { return new BST<Integer>(); }
 
     @Test
-    public void testIterate() {
+    public void testInorder() {
         BST<Integer> bst = new BST<>();
         ArrayList<Integer> output = new ArrayList<>();
 
@@ -40,6 +40,36 @@ class BSTTest {
         output.add(3);
         output.add(5);
         assertTrue(output.equals(bst.inorder()));
+    }
+
+    @Test
+    public void testPreorder() {
+        BST<Integer> bst = new BST<>();
+        ArrayList<Integer> output = new ArrayList<>();
+
+        bst.insert(3, 3);
+        bst.insert(2, 2);
+        bst.insert(4, 4);
+        bst.insert(1, 1);
+        output.add(3);
+        output.add(2);
+        output.add(1);
+        output.add(4);
+        assertTrue(output.equals(bst.preorder()));
+
+        bst.clear();
+        output.clear();
+
+        bst.insert(1, 1);
+        bst.insert(2, 2);
+        bst.insert(5, 5);
+        bst.insert(3, 3);
+        output.add(1);
+        output.add(2);
+        output.add(5);
+        output.add(3);
+        System.out.println(bst.preorder());
+        assertTrue(output.equals(bst.preorder()));
     }
 
     @Test

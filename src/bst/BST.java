@@ -131,4 +131,28 @@ public class BST <T>{
         if (node.getRight() != null)
             inorderBuilder(node.getRight(), array);
     }
+
+    /**
+     * Obtain a preorder traversal array of the items in the tree.
+     *
+     * @return An array with a preorder traversal of the items in the array.
+     */
+    public ArrayList<T> preorder() {
+        if (length() == 0)
+            return new ArrayList<>();
+
+        ArrayList<T> output = new ArrayList<T>();
+        preorderBuilder(getRootNode(), output);
+        return output;
+    }
+
+    private void preorderBuilder(Node<T> node, ArrayList<T> array) {
+        array.add(node.getData());
+
+        if (node.getLeft() != null)
+            preorderBuilder(node.getLeft(), array);
+
+        if (node.getRight() != null)
+            preorderBuilder(node.getRight(), array);
+    }
 }
