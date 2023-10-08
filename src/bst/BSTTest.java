@@ -69,6 +69,25 @@ class BSTTest {
         output.add(5);
         output.add(3);
         assertEquals(output, bst.preorder());
+
+        bst.clear();
+        output.clear();
+
+        bst.insert(8, 8);
+        bst.insert(3, 3);
+        bst.insert(2, 2);
+        bst.insert(0, 0);
+        bst.insert(4, 4);
+        bst.insert(6, 6);
+        bst.insert(100, 100);
+        output.add(8);
+        output.add(3);
+        output.add(2);
+        output.add(0);
+        output.add(4);
+        output.add(6);
+        output.add(100);
+        assertEquals(output, bst.preorder());
     }
 
     @Test

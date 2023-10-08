@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
@@ -68,7 +69,7 @@ class LListTest {
 
     @Test
     public void testEquals() {
-        ArrayList<Integer> equivalentTestList = new ArrayList<>();
+        LinkedList<Integer> equivalentTestList = new LinkedList<>();
         equivalentTestList.add(1);
         equivalentTestList.add(2);
         equivalentTestList.add(3);
@@ -84,9 +85,7 @@ class LListTest {
     public void testSwap(){
         LList<Integer> testList = makeTestLList();
 
-        System.out.println(testList);
         testList.swap(2, 3);
-        System.out.println(testList);
         assertTrue(testList.equals(new LList<>(new Integer[]{1, 3, 2, 4, 5})));
 
 
