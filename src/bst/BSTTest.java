@@ -26,7 +26,7 @@ class BSTTest {
         output.add(2);
         output.add(3);
         output.add(4);
-        assertTrue(output.equals(bst.inorder()));
+        assertEquals(output, bst.inorder());
 
         bst.clear();
         output.clear();
@@ -39,7 +39,7 @@ class BSTTest {
         output.add(2);
         output.add(3);
         output.add(5);
-        assertTrue(output.equals(bst.inorder()));
+        assertEquals(output, bst.inorder());
     }
 
     @Test
@@ -55,7 +55,7 @@ class BSTTest {
         output.add(2);
         output.add(1);
         output.add(4);
-        assertTrue(output.equals(bst.preorder()));
+        assertEquals(output, bst.preorder());
 
         bst.clear();
         output.clear();
@@ -68,8 +68,7 @@ class BSTTest {
         output.add(2);
         output.add(5);
         output.add(3);
-        System.out.println(bst.preorder());
-        assertTrue(output.equals(bst.preorder()));
+        assertEquals(output, bst.preorder());
     }
 
     @Test

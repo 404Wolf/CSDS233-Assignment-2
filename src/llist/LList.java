@@ -72,30 +72,38 @@ public class LList<T> implements Iterable<T>{
         this.tail.setData(data);
     }
 
+    /**
+     * Append to the end of the linked list.
+     *
+     * @param value The value for the node being appended to the linked list.
+     */
     public void append(T value) {
         append(new Node<>(value));
     }
 
-    /**
-     * Append a node to the end of the linked list.
-     *
-     * @param node The node to append to the linked list.
-     */
     public void append(Node<T> node) {
+        // There are a few different cases for appending, based on the number of items currently in the linked list.
+
+        // If there are no items in the linked list, the node being added becomes both the head and the tail.
         if (length() == 0) {
             head = node;
             tail = node;
         }
+        // If there is already one item, the node becomes the tail and the preexisting node becomes the head.
         else if (length() == 1) {
             tail = node;
             head.setNext(node);
             tail.setPrev(head);
         }
+        // In the general case, the node is appended after the tail, and the item before the node is the prior tail.
+        // Then, the tail becomes the new node.
         else {
             tail.setNext(node);
             node.setPrev(tail);
             tail = node;
         }
+
+        // Tick up the counter keeping track of how many items there are in the linked list.
         count++;
     }
 
@@ -114,16 +122,23 @@ public class LList<T> implements Iterable<T>{
      * @param node The node to remove.
      */
     public void remove(Node<T> node) {
+        // If there is only one item in the linked list, there now is neither a head nor tail.
         if (length() == 1)
             head = tail = null;
+        // If the node being removed is the head, the head should be the item after the item being removed.
         else if (node == head)
             head = node.getNext();
+        // If the node beign removed is the tail, the tail should be the item before the item being removed.
         else if (node == tail)
             tail = node.getPrev();
+        // Normally, the node is removed by making its previous node the node after it and the node after its previous
+        // element the node before it, thus popping off the node in between the two.
         else {
             node.getNext().setPrev(node.getPrev());
             node.getPrev().setNext(node.getNext());
         }
+
+        // Tick down the counter keeping track of the total number of nodes in the linked list.
         count--;
     }
 
@@ -132,12 +147,17 @@ public class LList<T> implements Iterable<T>{
      */
     public Node<T> locateNode(T value) {
         Node<T> cursor = getHeadNode();
+        // Begin searching for a node by linearly traversing the linked list and comparing each item to the item that we
+        // are trying to locate.
         while (cursor != null) {
+            // If we find the item, return the node that is containing the item that we were trying to find.
             if (cursor.getData().equals(value))
                 return cursor;
+            // Otherwise, keep traversing.
             cursor = cursor.getNext();
         }
 
+        // Throw an error if we cannot find the item that we're looking for.
         throw new NoSuchElementException("No such node exists in linked list.");
     }
 
@@ -172,6 +192,7 @@ public class LList<T> implements Iterable<T>{
             return;
         }
 
+        // Create references to the current items surrounding node 1 and node 2.
         Node<T> node1Next = node1.getNext();
         Node<T> node1Prev = node1.getPrev();
 
@@ -206,7 +227,7 @@ public class LList<T> implements Iterable<T>{
             node2.setPrev(node1);
             node2.setNext(node1Next);
         }
-        // Nodes are not subsequent.
+        // Now we handle the cases where the nodes are not subsequent.
         else {
             node2.setPrev(node1Prev);
             node2.setNext(node1Next);
@@ -232,8 +253,10 @@ public class LList<T> implements Iterable<T>{
             if (node2.getPrev() == null)
                 head = node2;
         }
-        head.clearPrev();
-        tail.clearNext();
+
+        // Theoretically, there should be no item before the head and no item after the tail, ever.
+        assert !head.hasPrev();
+        assert !tail.hasPrev();
     }
 
     /**
@@ -241,22 +264,29 @@ public class LList<T> implements Iterable<T>{
      */
     @Override
     public boolean equals(Object other) {
+        // Only iterables can be compared to the linked list.
         if (!((other) instanceof Iterable))
             return false;
 
+        // Cast down the object we're comparing to.
         LListIterator ourIterator = iterator();
-        Iterator theirIterator = ((Iterable) other).iterator();
+        Iterator<T> theirIterator = ((Iterable) other).iterator();
 
+        // Scan the list and see if any elements don't match.
         while (ourIterator.hasNext() && theirIterator.hasNext()) {
             if (!ourIterator.next().equals(theirIterator.next()))
                 return false;
         };
+
+        // If we make it to the end we can safely determine that the lists are identical.
         return true;
     }
 
     public String toString() {
+        // Build a string with a string builder to display the contents of the linked list.
         if (length() == 0)
             return "[]";
+
         StringBuilder output = new StringBuilder();
         output.append("[");
         for (T element : this) {
@@ -264,6 +294,8 @@ public class LList<T> implements Iterable<T>{
         }
         output.setLength(output.length() - 2);
         output.append("]");
+
+        // Convert output to a string and return it.
         return output.toString();
     }
 
@@ -290,12 +322,9 @@ public class LList<T> implements Iterable<T>{
     }
 
     private class LListIterator implements Iterator<T> {
-        public LList<T> llist;
-        private Node<T> cursor;
-        private boolean exhausted = false;
+        private Node<T> cursor; // The current position of the iterator
 
         public LListIterator(LList<T> llist) {
-            this.llist = llist;
             cursor = llist.getHeadNode();
         }
 
@@ -306,11 +335,14 @@ public class LList<T> implements Iterable<T>{
 
         @Override
         public T next() {
+            // Continue iterating if there are more items to iterate through.
             if (hasNext()) {
+                // Output the data of the current node and then step one forward.
                 T data = cursor.getData();
                 cursor = cursor.getNext();
                 return data;
             }
+            // If there are no items left in the linked list return null.
             return null;
         }
     }
